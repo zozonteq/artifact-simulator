@@ -37,6 +37,21 @@
                 value: value
             };
         }
+        const calcScore = (artifact) => {
+            let score = 0;
+            for(let i = 0; i < 5;i ++){
+                if(i!=0){
+                    let key = artifact.keys[i];
+                    if(key == 0 || key == 2){
+                        score += artifact.values[i];
+                    }
+                    if( key == 1){
+                        score += (artifact.values[i] * 2);
+                    }
+                }
+            }
+            return score;
+        }
         class Artifact{
             
             constructor(){
@@ -89,7 +104,7 @@
             let main_status = document.getElementById("main-status");
             let subStatuses = document.getElementsByClassName("sub-statuses")[0];
 
-            artifact_name.innerText = artifact.artifactName + " LV" + artifact.level;
+            artifact_name.innerText = artifact.artifactName + " LV" + artifact.level + " スコア:" + Math.floor(calcScore(artifact) * 10.0) / 10;
             main_option.innerText = artifact.keys[0];
             main_status.innerText = artifact.values[0];
             subStatuses.innerHTML = "";
@@ -111,6 +126,12 @@
         let artifact = new Artifact();
         const upgrade = () => {
             artifact.upgrade();
+            RenderArtifact(artifact);
+        }
+        const upgrade_all = () => {
+            for(let i = 0 ;i < 20 ; i++){
+                artifact.upgrade();
+            }
             RenderArtifact(artifact);
         }
     </script>
@@ -175,6 +196,9 @@
     </div>
     <button onclick="upgrade()">
         強化
+    </button>
+    <button onclick="upgrade_all()">
+        Max強化
     </button>
     <button onclick="newArtifact()">
         聖遺物リセット
