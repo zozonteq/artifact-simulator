@@ -65,9 +65,9 @@
 
                 this.upgrade = () =>{
                     if(this.level >= 20) return;
+                    this.level+=1;
                     this.values[0] = p_hp[this.level - 1];
 
-                    this.level+=1;
                     if(this.level % 4 == 0){
                         let fin = false;
                         while(!fin){
@@ -88,13 +88,15 @@
             let main_option = document.getElementById("main-option");
             let main_status = document.getElementById("main-status");
             let subStatuses = document.getElementsByClassName("sub-statuses")[0];
+
             artifact_name.innerText = artifact.artifactName + " LV" + artifact.level;
             main_option.innerText = artifact.keys[0];
             main_status.innerText = artifact.values[0];
             subStatuses.innerHTML = "";
             for(let i= 0 ; i < artifact.keys.length;i++){
                 if(i != 0){//めいんすては無視
-                    subStatuses.innerHTML += `<li class="sub-status">${subStautsDisplayName[artifact.keys[i]]} ${artifact.values[i]}</li>`;
+                    let formatted_value = Math.floor(artifact.values[i] * 10.0) / 10;
+                    subStatuses.innerHTML += `<li class="sub-status">${subStautsDisplayName[artifact.keys[i]]} ${formatted_value}</li>`;
                 }
             }
         }
